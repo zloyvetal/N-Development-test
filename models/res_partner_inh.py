@@ -1,4 +1,5 @@
 from odoo import fields, models, api
+from odoo.exceptions import UserError
 
 
 class ResPartner(models.Model):
@@ -29,6 +30,7 @@ class ResPartner(models.Model):
         if "primary_address" in vals and vals["primary_address"]:
             delivery_address_list = self.parent_id.child_ids.filtered(
                 lambda obj: obj.type == 'delivery' and obj.id != self.id)
+
             for rec in delivery_address_list:
                 rec.write({'primary_address': False})
 
